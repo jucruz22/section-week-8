@@ -26,20 +26,39 @@ def params_unique_combination(baseurl, params_d, private_keys=["api_key"]):
     return baseurl + "_".join(res)
 
 # changing function so its less specific to tags - multipurpose function
-def search_flickr(method,tags,per_page,photo_id=None):
+params_diction_search = {
+    "method": "flickr.photos.search",
+    "format": "json",
+    "api_key": FLICKR_API_KEY,
+    "tags": tags,
+    "per_page": per_page,
+    "nojsoncallback": 1
+}
+
+params_diction_getInfo = {
+    "method": "flickr.photos.getInfo"
+    "format": "json",
+    "api_key": FLICKR_API_KEY,
+    "photo_id": photo_id,
+    # "per_page": per_page,
+    "nojsoncallback": 1
+}
+
+def search_flickr(params_diction):
     if not FLICKR_API_KEY:
         raise Exception('Flickr API Key is missing!')
 
     baseurl = "https://api.flickr.com/services/rest/"
-    params_diction = {
-        "method": method, # "flickr.photos.search",
-        "format": "json",
-        "api_key": FLICKR_API_KEY,
-        "tags": tags,
-        "per_page": per_page,
-        "photo_id": photo_id,
-        "nojsoncallback": 1
-    }
+    params_diction = params_diction
+    #    {
+    #     "method": method, # "flickr.photos.search",
+    #     "format": "json",
+    #     "api_key": FLICKR_API_KEY,
+    #     "tags": tags,
+    #     "per_page": per_page,
+    #     "photo_id": photo_id,
+    #     "nojsoncallback": 1
+    # }
 
     unique_ident = params_unique_combination(baseurl,params_diction)
     if unique_ident in CACHE_DICTION:
