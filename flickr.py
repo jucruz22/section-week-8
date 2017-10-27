@@ -31,7 +31,7 @@ params_diction_search = {
     "format": "json",
     "api_key": FLICKR_API_KEY,
     "tags": tags,
-    "per_page": per_page,
+    "per_page": 10,
     "nojsoncallback": 1
 }
 
@@ -91,7 +91,8 @@ CACHE_DICTION = load_cache_json()
 if DEBUG:
     print(CACHE_DICTION)
 
-results = search_flickr_by_tags('sunset summer')
+# results = search_flickr_by_tags('sunset summer')
+results = search_flickr(params_diction_getInfo)
 
 photos_list = []
 for r in results['photos']['photo']:
